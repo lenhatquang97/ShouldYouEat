@@ -31,8 +31,9 @@ dependencies:
   auto_size_text: ^2.1.0
   convex_bottom_bar: ^2.6.0
   timeline_list: ^0.0.3
-  fl_chart: ^0.12.0
+  path_provider: ^1.6.21
   http: ^0.12.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,7 +56,7 @@ flutter:
      - assets/images/log.png
      - assets/images/rice-bowl.png
      - assets/images/settings.png
-
+     - assets/data/predict_result.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

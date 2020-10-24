@@ -1,47 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:ShouldYouEat/back_end/food_data.dart';
+import 'package:ShouldYouEat/back_end/food.dart';
+import 'package:ShouldYouEat/front_end/home.dart';
 class Result extends StatefulWidget {
   @override
   _ResultState createState() => _ResultState();
 }
 class _ResultState extends State<Result> {
-  Future<Food>foo;
-  Food food;
-  String apiKey='edf75d9abe2049cb9f79f8e873188e10';
-  String title='pizza';
+  Food foo;
+  String path;
   @override
   void initState(){
     super.initState();
-    foo=fetchFood(apiKey,title);
+    path='assets/data/predict_result.json';
   }
   @override
   
   Widget build(BuildContext context) { 
     return MaterialApp(
       title: 'Fetch Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         backgroundColor:Color(0xff2e7d32),
         appBar: AppBar(
-          title: Text('Fetch Data Example'),
+          title: Text('Result'),
         ),
         body: Center(
-          child: FutureBuilder<Food>(
-            future: foo,
+          child: FutureBuilder(
+            future: parseJson(path),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                print('pizza');
-                print(snapshot.data.calories);
-                print(snapshot.data.fat);
-                print(snapshot.data.carbs);
-                print(snapshot.data.protein);
-                return Text('Hello world');
+                foo=Food.fromJson(snapshot.data);
+                print(foo.title);
+                print(foo.ingrs);
+                print(foo.recipe);
+                return Column(
+                  children: [
+                    Text(foo.title),
+                    SizedBox(height: 15,),
+                    Text('Ingredients:'),
+                    Text(foo.ingrs.join(',')),
+                    SizedBox(height: 15,),
+                    Text('Recipe:'),
+                    Column(
+                      children:foo.recipe.map((e) => 
+                      new Text('-'+e)).toList(),
+                    ),
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context)=>Home(food:foo)
+                          )
+                        );
+                      },
+                      child: Text('BACK'),
+                    )
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-
               // By default, show a loading spinner.
               return CircularProgressIndicator();
             },

@@ -1,7 +1,6 @@
 import 'package:ShouldYouEat/front_end/result.dart';
 import 'package:flutter/material.dart';
 import 'package:ShouldYouEat/front_end/add.dart';
-import 'package:ShouldYouEat/front_end/goals.dart';
 import 'package:ShouldYouEat/front_end/home.dart';
 void main() {
   runApp(MaterialApp(
@@ -11,7 +10,6 @@ void main() {
       '/result':(context)=>Result(),
       '/':(context)=>Home(),
       '/add':(context)=>Add(),
-      '/goals':(context)=>Goals(),
     }
   ));
 }
